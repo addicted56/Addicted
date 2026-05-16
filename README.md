@@ -1,139 +1,212 @@
+<div align="center">
+
 # Student Academic Record Management System
 
-> A polished role-based academic portal for managing students, staff, courses, grades, attendance, and PDF transcripts for the Faculty of Computing, University of Delta, Agbor.
+### University of Delta, Agbor (UNIDEL) | Faculty of Computing
 
-[![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://www.php.net/)
-[![MySQL](https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
-[![Composer](https://img.shields.io/badge/Composer-Dependency_Manager-885630?style=for-the-badge&logo=composer&logoColor=white)](https://getcomposer.org/)
+<p>
+A premium, role-based academic management platform for handling student records,
+course registration, grading workflows, and transcript generation.
+</p>
+
+<p>
+  <img src="https://img.shields.io/badge/PHP-8.x-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP" />
+  <img src="https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" />
+  <img src="https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap" />
+  <img src="https://img.shields.io/badge/Dompdf-PDF%20Engine-2C8C99?style=for-the-badge" alt="Dompdf" />
+  <img src="https://img.shields.io/badge/Composer-Dependency%20Manager-885630?style=for-the-badge&logo=composer&logoColor=white" alt="Composer" />
+</p>
+
+<p>
+  <a href="#-overview">Overview</a> •
+  <a href="#-key-features">Features</a> •
+  <a href="#-system-flow">System Flow</a> •
+  <a href="#-quick-setup-xampp">Quick Setup</a> •
+  <a href="#-project-structure">Structure</a>
+</p>
+
+</div>
+
+---
 
 ## Overview
 
-This project is a web-based Student Academic Record Management System built with PHP and MySQL. It provides a clean and responsive interface for three major roles:
+This project is a full-stack **Student Academic Record Management System (SARMS)** built for academic operations in a university environment.
 
-- Admin: manage students, staff, courses, and course assignments
-- Staff: enter and update student grades for assigned courses
-- Student: register courses, view dashboard summaries, and download transcripts
+It provides secure, role-based workflows for:
 
-The database scripts are included in the repository under the `database/` folder for easy setup in XAMPP/phpMyAdmin.
+- **Admin**: manage students, staff, courses, and assignments
+- **Staff**: enter CA and exam scores for assigned courses
+- **Students**: register courses, track progress, and download transcripts
 
-## Highlights
+The platform emphasizes:
 
-- Role-based login for admin, staff, and students
-- Beautiful dashboard UI with responsive cards, tables, and banner sections
-- Student course registration for the current academic session
-- Staff course assignment and grade entry workflow
-- Automatic grade, GPA, and CGPA calculations
-- PDF transcript and report generation
-- MySQL schema and migration scripts included in the repo
-- XAMPP-friendly setup for local development
+- centralized data management
+- transparent grading process
+- fast access to academic records
+- clean dashboard-based user experience
 
-## Live Demo
+---
 
-https://studentprofile.gt.tc/
+## Key Features
+
+### Core Academic Modules
+
+- Role-based authentication: Admin, Staff, Student
+- Student profile and academic record management
+- Course creation and staff-course assignment
+- Session-based course registration
+- Grade entry with automatic grade and grade-point mapping
+- GPA and CGPA calculations
+- Transcript rendering and PDF downloads
+
+### Experience and Presentation
+
+- Modern responsive UI with Bootstrap and custom styling
+- Dashboard cards and visual summary panels
+- Print-friendly transcript views
+- Structured workflow suitable for final-year presentation demos
+
+### Data and Integrity
+
+- MySQL relational schema with foreign keys and constraints
+- Duplicate prevention for registrations and grade entries
+- Included migration and fresh schema scripts
+
+---
+
+## System Flow
+
+```mermaid
+flowchart LR
+    A[Admin] --> B[Manage Students and Staff]
+    A --> C[Create Courses]
+    A --> D[Assign Courses to Staff]
+    E[Student] --> F[Register Courses]
+    G[Staff] --> H[Enter CA and Exam Scores]
+    H --> I[Auto Grade and Grade Point]
+    I --> J[Transcript Engine]
+    J --> K[GPA and CGPA]
+    K --> L[PDF Transcript and Reports]
+```
+
+---
 
 ## Tech Stack
 
-- PHP
-- MySQL
-- Bootstrap 5
-- Bootstrap Icons
-- JavaScript
-- Dompdf
-- Composer
+- **Backend:** PHP
+- **Database:** MySQL
+- **Frontend:** HTML5, CSS3, Bootstrap 5, JavaScript
+- **Icons:** Bootstrap Icons
+- **PDF:** Dompdf
+- **Dependencies:** Composer
+
+---
+
+## Quick Setup (XAMPP)
+
+### 1. Clone Project
+
+```bash
+git clone https://github.com/addicted56/Addicted.git
+cd Addicted
+```
+
+### 2. Install Dependencies
+
+```bash
+composer install
+```
+
+### 3. Start Services
+
+- Start **Apache** and **MySQL** in XAMPP
+- Open **phpMyAdmin**
+
+### 4. Create Database
+
+Create a database, for example:
+
+- `unidel_sarms`
+
+### 5. Import SQL
+
+Choose one:
+
+- Fresh install: `database/unidel_schema.sql`
+- Upgrade existing schema: `database/migrate.sql`
+
+### 6. Configure Connection
+
+Update DB credentials in `db.php`:
+
+- host
+- username
+- password
+- database name
+
+### 7. Run in Browser
+
+```text
+http://localhost/Student-Management-System/
+```
+
+---
+
+## Default Admin Login
+
+If you imported `database/unidel_schema.sql`, default admin is:
+
+- **Username:** `admin`
+- **Password:** `password`
+
+---
 
 ## Project Structure
 
 ```text
 Student-Management-System/
-|-- add_attendance.php
-|-- add_marks.php
-|-- add_student.php
 |-- admin_login.php
-|-- assign_courses.php
-|-- change_password.php
-|-- course_registration.php
 |-- dashboard.php
-|-- db.php
-|-- download_pdf.php
-|-- download_transcript.php
-|-- edit_student.php
-|-- footer.php
-|-- forgot_password.php
-|-- header.php
-|-- login.php
-|-- manage_courses.php
-|-- manage_grades.php
-|-- manage_staff.php
-|-- staff_dashboard.php
-|-- staff_login.php
 |-- student_dashboard.php
+|-- staff_dashboard.php
+|-- manage_courses.php
+|-- manage_staff.php
+|-- assign_courses.php
+|-- course_registration.php
+|-- manage_grades.php
 |-- transcript.php
+|-- download_transcript.php
+|-- download_pdf.php
+|-- db.php
 |-- styles.css
 |-- database/
 |   |-- migrate.sql
 |   |-- unidel_schema.sql
 ```
 
-## Screens and Modules
+---
 
-| Module | Purpose |
-| --- | --- |
-| Admin dashboard | Overview of records, staff, and course management |
-| Staff dashboard | View assigned courses and enter grades |
-| Student dashboard | Course registration, transcript access, report download |
-| Course registration | Register courses for the current session |
-| Transcript | View GPA, CGPA, and class of degree |
-| PDF export | Download clean printable academic reports |
+## Presentation Notes (For Final Defense)
 
-## Database Setup
+Use this project demo order for a smooth presentation:
 
-The project includes two database scripts:
+1. Show role-based login (Admin, Staff, Student)
+2. As Admin, create or manage course/staff records
+3. As Staff, enter CA and exam scores
+4. As Student, show dashboard, registration, and transcript
+5. Download transcript PDF and explain GPA/CGPA output
 
-- `database/unidel_schema.sql` for a fresh MySQL database
-- `database/migrate.sql` for upgrading an existing student management database
+This flow clearly demonstrates architecture, business logic, and real-world usability.
 
-If you are using XAMPP:
+---
 
-1. Start Apache and MySQL in XAMPP.
-2. Open phpMyAdmin.
-3. Create a new database, for example `unidel_sarms`.
-4. Import `database/unidel_schema.sql` for a fresh install, or `database/migrate.sql` if you are upgrading an existing schema.
-5. Update `db.php` with your local database credentials if needed.
+## Live Demo
 
-## Local Installation
+https://studentprofile.gt.tc/
 
-1. Clone or copy the project into your XAMPP `htdocs` directory.
-2. Run `composer install` inside the project folder.
-3. Import the SQL file into MySQL using phpMyAdmin.
-4. Open `db.php` and confirm the host, username, password, and database name.
-5. Visit the project in your browser through `http://localhost/Student-Management-System/`.
-
-## Default Access
-
-The schema creates a default admin account:
-
-- Username: `admin`
-- Password: `password`
-
-## Key Features in Detail
-
-- Admin can add students, staff, departments, and courses.
-- Admin can assign courses to staff for a given semester and session.
-- Staff can enter CA and exam scores, and the system calculates totals and letter grades automatically.
-- Students can register courses and review their academic history in a transcript-style interface.
-- PDF output is supported for transcripts and student reports.
-
-## Notes
-
-- The UI has been styled with a modern Bootstrap-based theme in `styles.css`.
-- Database tables and relationships were designed for role separation and academic record integrity.
-- This project is intended for academic and demonstration use.
-
-## Live Data and Demo
-
-If you want to test the system locally with sample data, import the schema first and then add student, staff, and course records through the admin interface.
+---
 
 ## License
 
-This project is released for educational and demonstration purposes.
+This repository is intended for educational and academic demonstration purposes.
