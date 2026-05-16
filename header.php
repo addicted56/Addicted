@@ -1,31 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Student Management System</title>
-
-<!-- BOOTSTRAP (GLOBAL DESIGN SYSTEM) -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- YOUR CUSTOM CSS -->
-<link rel="stylesheet" href="/sms_project/style.css">
-
-</head>
-
-<body>
-
-<div class="text-center mt-4">
-
-<a href="logo_redirect.php">
-    <img src="/sms_project/assets/logo.png"
-         style="width:140px; height:auto; cursor:pointer;">
-</a>
-
-<h2 class="mt-2">
-STUDENT MANAGEMENT SYSTEM
-</h2>
-
+<nav class="navbar navbar-light py-3 border-bottom" style="background:rgba(255,255,255,.9);backdrop-filter:blur(6px);">
+<div class="container d-flex align-items-center justify-content-between flex-wrap gap-2">
+    <a href="logo_redirect.php" class="text-decoration-none d-flex align-items-center gap-3">
+        <img src="assets/logo.png" alt="UNIDEL Logo" style="width:64px;height:auto;">
+        <div>
+            <h5 class="mb-0 fw-bold" style="color:#14213d;letter-spacing:.3px;">University of Delta, Agbor</h5>
+            <small class="text-muted">Student Academic Record Management System</small>
+        </div>
+    </a>
+    <span class="muted-chip">Faculty of Computing</span>
 </div>
+</nav>

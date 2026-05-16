@@ -126,6 +126,17 @@ while($row = $result->fetch_assoc()){
         = $row['obtained_marks'];
 }
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Edit Student - UNIDEL</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
 
 <?php include "header.php"; ?>
 
@@ -222,3 +233,6 @@ Update Student
 </div>
 
 <?php include "footer.php"; ?>
+
+</body>
+</html>

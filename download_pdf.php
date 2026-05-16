@@ -129,6 +129,36 @@ $html .= generateStudentReport($conn,$student);
 }
 
 /* =====================================================
+   STAFF DOWNLOAD → STUDENTS IN ASSIGNED COURSES
+===================================================== */
+
+elseif($role === "staff"){
+
+/* staff can only see their own students */
+$sp = $conn->prepare("SELECT id FROM staff WHERE user_id=?");
+$sp->bind_param("i",$user_id);
+$sp->execute();
+$staffRow = $sp->get_result()->fetch_assoc();
+if($staffRow){
+    $academic_year = getCurrentSession($conn);
+    $res = $conn->prepare("
+        SELECT DISTINCT s.* FROM students s
+        JOIN course_registrations cr ON s.id = cr.student_id
+        JOIN staff_courses sc ON cr.course_id = sc.course_id AND cr.academic_year = sc.academic_year
+        WHERE sc.staff_id=? AND sc.academic_year=?
+        ORDER BY s.name
+    ");
+    $res->bind_param("is", $staffRow['id'], $academic_year);
+    $res->execute();
+    $sResult = $res->get_result();
+    while($student = $sResult->fetch_assoc()){
+        $html .= generateStudentReport($conn,$student);
+    }
+}
+
+}
+
+/* =====================================================
    ADMIN DOWNLOAD → ALL STUDENTS FULL REPORTS
 ===================================================== */
 

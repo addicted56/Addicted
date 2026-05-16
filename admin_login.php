@@ -53,9 +53,9 @@ if(isset($_POST['login']))
 <!DOCTYPE html>
 <html>
 <head>
-<title>Admin Login</title>
+<title>Admin Login – UNIDEL</title>
 
-<link rel="stylesheet" href="/sms_project/style.css">
+<link rel="stylesheet" href="styles.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
@@ -97,12 +97,11 @@ required>
 Login
 </button>
 <div class="text-center mt-3">
-    
         Student login?
-        <a href="login.php" class="text-decoration-none fw-semibold">
-            Click Here
-        </a>
-    
+        <a href="login.php" class="text-decoration-none fw-semibold">Click Here</a>
+        <br>
+        Academic Staff?
+        <a href="staff_login.php" class="text-decoration-none fw-semibold">Staff Login</a>
 </div>
 
 

@@ -14,7 +14,7 @@ if(isset($_POST['login'])){
     ========================= */
 
     $stmt = $conn->prepare(
-        "SELECT id, user, pass, role
+        "SELECT id, user, pass, role, must_change_password
          FROM users
          WHERE user=? AND role='student'"
     );
@@ -62,9 +62,9 @@ exit();
 <!DOCTYPE html>
 <html>
 <head>
-<title>Student Login</title>
+<title>Student Login – UNIDEL</title>
 
-<link rel="stylesheet" href="/sms_project/style.css">
+<link rel="stylesheet" href="styles.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
@@ -77,7 +77,7 @@ exit();
 
 <div class="card shadow p-4" style="width:400px;">
 
-<h4 class="text-center mb-3 text-dark">Login</h4>
+<h4 class="text-center mb-3 text-dark">Student Login</h4>
 
 <?php if($error!=""){ ?>
 <div class="alert alert-danger"><?= $error ?></div>
@@ -113,6 +113,9 @@ Forgot Password?
 
 New user?
 <a href="register.php">Register</a><br>
+
+Academic Staff?
+<a href="staff_login.php">Staff Login</a><br>
 
 Admin login?
 <a href="admin_login.php">Click Here</a>

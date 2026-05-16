@@ -23,10 +23,28 @@ if(isset($_POST['change'])){
     $stmt->bind_param("si",$hash,$user_id);
     $stmt->execute();
 
-    header("Location: student_dashboard.php");
+    /* Redirect based on role */
+    if ($_SESSION['role'] === 'staff') {
+        header("Location: staff_dashboard.php");
+    } elseif ($_SESSION['role'] === 'admin') {
+        header("Location: dashboard.php");
+    } else {
+        header("Location: student_dashboard.php");
+    }
     exit();
 }
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Change Password - UNIDEL</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
 
 <?php include "header.php"; ?>
 
@@ -59,3 +77,6 @@ Update Password
 </div>
 
 <?php include "footer.php"; ?>
+
+</body>
+</html>

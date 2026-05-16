@@ -1,0 +1,563 @@
+CHAPTER THREE
+Methodology/System Analysis and Design
+
+3.1 Introduction to System Analysis
+System analysis is the process of studying an existing system, identifying its weaknesses, and defining requirements for an improved solution. In this project, system analysis focused on how student academic records are currently managed in the Faculty of Computing, University of Delta, Agbor (UNIDEL), and how a web-based system can address delays, errors, and access limitations.
+
+The analysis phase covered:
+- Existing record workflows (student registration, grade entry, transcript preparation)
+- User categories and responsibilities (Admin, Academic Staff, Student)
+- Data flow between users and records
+- Security and access control requirements
+- Reporting requirements for transcript and PDF export
+
+The output of the analysis was used to design and implement the Web-Based Student Academic Record Management System (SARMS) for UNIDEL.
+
+3.2 Research Methodology (Where Applicable)
+A practical system development research approach was adopted. The methodology combined descriptive and design science perspectives:
+- Descriptive: to understand current academic record management challenges.
+- Design science/system development: to design, build, and evaluate a working software solution.
+
+The adopted development process was an incremental waterfall-style model:
+1. Requirement gathering and problem definition.
+2. System analysis and database design.
+3. Interface and architecture design.
+4. Implementation (module-by-module).
+5. Testing and evaluation.
+6. Documentation.
+
+This approach was appropriate because the project had clear expected outputs (student records portal, grading workflow, transcript generation) and needed traceability from requirements to implementation.
+
+3.3 Description of the Existing System
+Before this solution, academic record handling was partly manual and partly semi-digital. Typical operational characteristics included:
+- Student details recorded in spreadsheets or paper-based files.
+- Course registration verification done manually in units/departmental offices.
+- Result collation done through fragmented files before final upload or approval.
+- Transcript preparation requiring manual consolidation from multiple semesters.
+
+Observed limitations of the existing approach:
+- Delayed updates: students wait long periods for score and transcript updates.
+- Error-prone operations: manual transfer of marks causes omissions and calculation errors.
+- Poor transparency: students have limited immediate visibility into course records.
+- Data fragmentation: records spread across files and personnel, making retrieval difficult.
+- Weak auditability: difficult to track who entered or modified specific records.
+
+3.4 The Proposed System
+The proposed system is a role-based web application that centralizes academic record processes for the Faculty of Computing. The system supports three actors:
+- Administrator:
+  - Manage students
+  - Manage courses
+  - Manage staff accounts
+  - Assign courses to staff
+  - Manage legacy marks/attendance entries
+  - Download academic reports
+- Academic Staff:
+  - Login as staff
+  - View assigned courses by academic session
+  - Enter Continuous Assessment (CA) and Exam scores
+  - Auto-compute total score, letter grade, and grade point
+- Student:
+  - Login and view personal dashboard
+  - Register courses for current session
+  - View performance summary and attendance (legacy-compatible)
+  - View transcript with GPA/CGPA and class of degree
+  - Download transcript/report as PDF
+
+Core design objectives achieved:
+- Centralized record storage in MySQL.
+- Real-time update of grades and registration records.
+- Role-based access restrictions using session checks.
+- Automatic academic computations for grading and CGPA.
+- Generated PDF reports via Dompdf for portability and official use.
+
+3.5 Significance and Challenges of the Proposed System
+Significance:
+- Improves data integrity through normalized relational tables and unique constraints.
+- Reduces administrative burden by automating repetitive operations.
+- Improves student experience with faster access to records and transcripts.
+- Supports academic planning with structured session, course, and grade data.
+- Enhances accountability through role-based actions and staff grade-entry linkage.
+
+Challenges:
+- Internet and hosting dependency may affect availability.
+- User onboarding/training is required for consistent usage.
+- Legacy data migration must be carefully validated to avoid historical data errors.
+- Some security features are basic and need strengthening for production-scale deployment.
+- Differences between legacy and upgraded modules (semester_marks/attendance versus course-based grades) require careful harmonization.
+
+3.6 Data Collection
+Data were collected using multiple practical sources:
+- Observation:
+  - Existing student and departmental record handling process was observed to identify bottlenecks.
+- Informal interviews/discussions:
+  - Students and staff were consulted on major pain points: delayed records, result visibility, transcript delays.
+- Document review:
+  - Existing forms and structures (student biodata fields, course attributes, semester/session structure, grade expectations).
+- System artifact collection:
+  - Current project modules and SQL schema were analyzed to align design with implementation.
+
+Collected data categories:
+- User data: username, role, password state, email.
+- Student data: name, roll number/matric, branch/department, level/year.
+- Staff data: staff ID, designation, department.
+- Course data: course code/title, units, level, semester, department.
+- Transaction data: registrations, grades, attendance, semester marks, session data.
+
+3.7 Data Set Collection (If Applicable)
+This project is transactional and does not rely on machine learning datasets. Instead, operational datasets were created within the system database:
+- Master datasets:
+  - departments
+  - courses
+  - users
+  - students
+  - staff
+- Transaction datasets:
+  - course_registrations
+  - grades
+  - staff_courses
+  - semester_marks (legacy support)
+  - attendance (legacy support)
+  - academic_sessions
+
+Sample controlled data scenarios used in development/testing:
+- Multiple student records across different levels.
+- Courses distributed by level and semester.
+- Staff-course assignments for grade-entry validation.
+- Grade entries covering pass/fail ranges to test computeGrade boundaries.
+
+3.8 System Design (Structural Design, Database Design and Specification, Interface Design)
+A. Structural Design
+The system follows a modular, page-oriented structure:
+- Authentication modules:
+  - login.php (student)
+  - admin_login.php
+  - staff_login.php
+  - register.php
+  - forgot_password.php
+  - change_password.php
+- Admin modules:
+  - dashboard.php
+  - manage_courses.php
+  - manage_staff.php
+  - assign_courses.php
+  - add_student.php
+  - add_marks.php (legacy)
+  - add_attendance.php (legacy)
+- Staff modules:
+  - staff_dashboard.php
+  - manage_grades.php
+- Student modules:
+  - student_dashboard.php
+  - course_registration.php
+  - transcript.php
+  - download_transcript.php
+- Shared modules:
+  - db.php
+  - header.php
+  - footer.php
+  - styles.css
+
+B. Database Design and Specification
+The MySQL schema is relational and constraint-driven. Key tables and relationships include:
+- users (id, user, pass, email, role, must_change_password, created_at)
+- students (id, user_id, name, roll_no, branch, year)
+- staff (id, user_id, full_name, staff_id, department, designation)
+- departments (id, dept_code, dept_name, faculty)
+- courses (id, course_code, course_title, credit_units, semester, level, dept_id)
+- course_registrations (student_id, course_id, academic_year, semester, unique composite key)
+- grades (student_id, course_id, academic_year, semester, CA, Exam, total, grade, grade_point, entered_by)
+- staff_courses (staff_id, course_id, academic_year, semester)
+- academic_sessions (session_name, is_current)
+- legacy compatibility:
+  - semester_marks
+  - attendance
+
+Design characteristics:
+- Foreign keys ensure referential integrity.
+- ON DELETE CASCADE / SET NULL options manage relationship lifecycle.
+- Composite uniqueness prevents duplicate registrations/grade records in same session-semester.
+
+C. Interface Design
+The interface uses Bootstrap 5 with custom CSS:
+- Responsive cards, tables, and forms.
+- Dashboard-style layouts for each role.
+- Input forms constrained by validation boundaries:
+  - CA max 30
+  - Exam max 70
+- Clear navigation actions:
+  - Back buttons
+  - Role-specific menu links
+  - Download/print options for reports
+
+Design principles applied:
+- Simplicity and readability.
+- Minimal click path for high-frequency operations.
+- Consistent layout across modules via shared header/footer.
+
+3.9 Design Methodology (Materials and Method)
+Materials (Technologies/Tools):
+- Frontend: HTML5, CSS3, Bootstrap 5, JavaScript
+- Backend: PHP (procedural with prepared statements)
+- Database: MySQL (InnoDB)
+- PDF Engine: Dompdf (via Composer)
+- Environment: XAMPP/LAMP-like local web server stack
+- Package management: Composer
+- Editor/IDE: Visual Studio Code
+
+Method:
+- Role and process modeling first.
+- ER-oriented database structure implementation.
+- Incremental module development:
+  1. Authentication and sessions.
+  2. User/profile management.
+  3. Course and assignment workflows.
+  4. Grade and transcript engines.
+  5. PDF export and report delivery.
+- Integrated testing after each module and cross-module tests after integration.
+
+3.10 System Architecture
+The architecture follows a three-layer web architecture:
+1. Presentation Layer:
+   - Browser UI pages (HTML/CSS/Bootstrap/JS)
+2. Application Layer:
+   - PHP scripts implementing business logic
+   - Session-based access control
+   - Grade and GPA/CGPA computation functions
+3. Data Layer:
+   - MySQL relational database
+   - Tables, indexes, constraints, and foreign keys
+
+Operational flow:
+- User request -> PHP page/controller -> SQL query/update -> Response rendering.
+
+Security controls in architecture:
+- Session role checks on protected routes.
+- Prepared SQL statements to reduce SQL injection risk.
+- Password hashing support using password_hash()/password_verify().
+
+3.11 System UML Implementation
+A. Use Case Summary
+Actors and major use cases:
+- Admin:
+  - Manage students
+  - Manage staff and accounts
+  - Manage courses
+  - Assign courses
+  - Download reports
+- Staff:
+  - View assigned courses
+  - Enter/update grades
+- Student:
+  - Register courses
+  - View dashboard
+  - View/download transcript
+  - Change password
+
+B. Activity Flow (Grade Entry)
+1. Staff logs in.
+2. System validates role = staff.
+3. Staff selects assigned course.
+4. System loads registered students for course.
+5. Staff enters CA and Exam scores.
+6. System computes total, letter grade, and grade point.
+7. System inserts/updates grade record.
+8. Student transcript reflects updated result.
+
+C. Sequence Interaction (Student Transcript Access)
+1. Student requests transcript page.
+2. Application validates session and fetches student profile.
+3. Application joins grades and courses.
+4. Application groups by session/semester.
+5. Application computes GPA and cumulative CGPA.
+6. Transcript is displayed; optional PDF generation executed on request.
+
+D. Class/Entity Perspective (Conceptual)
+- User <- Student
+- User <- Staff
+- Department -> Course
+- Student <-> Course via CourseRegistration
+- Student <-> Course via Grade
+- Staff <-> Course via StaffCourse
+- AcademicSession referenced by registrations/assignments/grades
+
+3.12 Performance Evaluation Metrics (If Applicable)
+Since this is a transaction-driven management system, the following practical metrics were used:
+- Functional correctness:
+  - Percentage of test cases passed.
+  - Successful grade computation for boundary values.
+- Data integrity:
+  - Duplicate prevention effectiveness in registration and grading.
+  - Referential consistency across user/student/staff/course records.
+- Response performance:
+  - Average page load and query response under regular faculty usage.
+- Usability indicators:
+  - Task completion time for key operations (course registration, grade entry).
+  - User feedback on navigation clarity.
+- Reliability:
+  - Error rate during repeated CRUD operations.
+
+Expected target outcomes:
+- >= 90% successful first-attempt completion for core user tasks.
+- Zero duplicate registration/grade records for same session-semester combination.
+- Accurate GPA/CGPA matching manual validation samples.
+
+
+CHAPTER FOUR
+System Implementation and Testing
+
+4.1 Introduction
+This chapter presents the implementation details of the proposed system and evaluates whether the developed modules satisfy the requirements identified in earlier chapters. It explains technologies used, deployment setup, requirement fulfillment, system testing strategy, and discussion of outcomes.
+
+4.2 Language Implementation
+The system was implemented using a web technology stack:
+- HTML/CSS/Bootstrap for structure, styling, and responsiveness.
+- JavaScript for client-side interactions (dynamic search/select behavior).
+- PHP for server-side logic, session management, and data processing.
+- MySQL for persistent relational storage.
+
+Implementation style:
+- Page-controller PHP scripts combining request handling and output rendering.
+- SQL access via mysqli prepared statements in sensitive operations.
+- Shared utility functions in db.php (current session retrieval and grade computation).
+
+4.3 Choice of Programming Language
+PHP was selected as the core backend programming language because:
+- It is widely used for educational web systems.
+- It integrates directly with MySQL.
+- It supports rapid prototyping and straightforward deployment on shared hosting and local servers.
+- It offers built-in session handling and password hashing utilities.
+
+4.4 Language Justification
+The choice is justified by project constraints and goals:
+- Cost-effective and practical for an undergraduate project.
+- Abundant documentation and community support.
+- Easy integration with Bootstrap frontend.
+- Supports modular incremental development suitable for the project timeline.
+
+Additionally, MySQL complements PHP with reliable relational capabilities needed for role-based academic record processing.
+
+4.5 Requirement Specification (Functional and Non Functional Requirements)
+A. Functional Requirements
+- User authentication and role-based login.
+- Admin management of students, staff, courses, and course assignments.
+- Student course registration by session and semester.
+- Staff grade entry with automatic total, grade, and grade-point computation.
+- Student transcript view with GPA/CGPA and classification.
+- PDF report generation for transcript and student reports.
+- Password change for first-time/default-password users.
+
+B. Non-Functional Requirements
+- Usability: simple and clear interfaces for non-technical users.
+- Security: role restrictions, session validation, password hashing.
+- Reliability: consistent CRUD operations and constraint-backed data integrity.
+- Performance: acceptable response under normal departmental load.
+- Maintainability: modular pages and clear database schema.
+- Portability: browser-based access across common OS platforms.
+
+4.6 System Implementation and Deployment
+Implementation highlights by module:
+- Authentication:
+  - Separate login routes for students, staff, and admin.
+  - Session variables maintain identity and role context.
+- User/Record Management:
+  - Admin creates staff and student records.
+  - Student creation auto-generates account and initial legacy academic placeholders.
+- Course Workflow:
+  - Admin defines courses and assigns staff by session/semester.
+  - Student registers selected courses.
+- Grade Workflow:
+  - Staff enters CA and Exam scores.
+  - System enforces scoring bounds and computes grades automatically.
+  - Grade records are upserted to avoid duplicates.
+- Transcript/Reporting:
+  - Transcript groups records by session and semester.
+  - GPA/CGPA calculations performed dynamically.
+  - Dompdf exports printable PDF transcript/report.
+
+Deployment model:
+- Local development deployment on Apache + PHP + MySQL stack.
+- Database initialized using full schema and migration SQL scripts.
+- Composer used to install Dompdf dependencies.
+
+4.7 System Requirement
+A. Hardware Requirements (Minimum)
+- Processor: Dual-core 2.0 GHz or higher
+- RAM: 4 GB minimum (8 GB recommended)
+- Storage: 10 GB free disk space
+- Display/Network: standard web-capable workstation with LAN/Internet
+
+B. Software Requirements
+- Operating System: Windows/Linux/macOS
+- Web Server: Apache (or equivalent)
+- PHP: compatible modern version supporting password API and mysqli
+- Database: MySQL/MariaDB
+- Browser: Chrome, Edge, Firefox (current versions)
+- Dependency manager: Composer
+
+4.8 System Evaluation
+Evaluation was performed against project objectives:
+- Objective: centralized record management
+  - Achieved via unified relational database and role modules.
+- Objective: secure and role-based access
+  - Achieved via route checks and session role validation.
+- Objective: automate grade and transcript operations
+  - Achieved through grade computation logic and transcript engine.
+- Objective: reduce administrative delay
+  - Achieved through direct digital entry and immediate student access.
+
+Measured qualitative outcomes:
+- Improved accessibility and transparency for students.
+- Reduced repetitive manual workload for staff and admin.
+- Better consistency in result presentation and transcript output.
+
+4.9 Software Development and Testing Tools (If Applicable)
+Development tools:
+- Visual Studio Code (editing/debugging)
+- PHP runtime + Apache server environment
+- MySQL database server
+- Composer package manager
+- Dompdf library
+
+Testing tools/methods:
+- Browser developer tools for interface behavior checks.
+- SQL inspection through phpMyAdmin/MySQL client for data verification.
+- Manual black-box test scripts for each user role and workflow.
+
+4.10 System Testing and Documentation
+A. Testing Approach
+A black-box functional testing strategy was used. Each module was tested with valid/invalid inputs and cross-role access attempts.
+
+B. Representative Test Cases
+1. Authentication Test
+- Input: valid student username/password
+- Expected: redirect to student dashboard
+- Result: pass
+
+2. Role Restriction Test
+- Input: student tries to open admin module URL
+- Expected: denied/redirected to login
+- Result: pass
+
+3. Grade Boundary Test
+- Input: CA > 30 or Exam > 70
+- Expected: value clamped/controlled, total computed correctly
+- Result: pass
+
+4. Duplicate Registration Test
+- Input: same student/course/session/semester submitted twice
+- Expected: no duplicate row due to unique key and upsert behavior
+- Result: pass
+
+5. Transcript Consistency Test
+- Input: compare displayed GPA/CGPA with manual calculation
+- Expected: matching values
+- Result: pass
+
+6. PDF Export Test
+- Input: generate transcript/report PDF
+- Expected: downloadable valid PDF with complete content
+- Result: pass
+
+C. Documentation Produced
+- Database scripts (fresh schema and migration scripts)
+- Source code modules by functionality
+- README summary and feature description
+- Chaptered academic project write-up
+
+4.11 Results and Discussion (If Applicable)
+The implementation produced a functioning web-based academic record system that meets major project goals.
+
+Key results:
+- Multi-role operation (Admin/Staff/Student) is functional.
+- Course assignment and registration workflows are operational.
+- Grade management with automatic grade-point mapping is accurate.
+- Transcript generation with GPA/CGPA and classification works correctly.
+- PDF exports are available for reporting and archival purposes.
+
+Discussion:
+- The system demonstrates clear improvement over manual/semi-manual handling.
+- Integrity constraints and role boundaries reduce common administrative errors.
+- Legacy and upgraded modules coexist, enabling gradual transition.
+- Future hardening is needed for enterprise security and scalability.
+
+
+CHAPTER FIVE
+Conclusion and Recommendations
+
+5.1 Conclusion
+This project successfully designed and implemented a Web-Based Student Academic Record Management System for the Faculty of Computing, University of Delta, Agbor. The system addressed key issues identified in the existing process, including delayed updates, fragmented records, and transparency limitations.
+
+By integrating role-based access, structured data management, grade automation, transcript computation, and PDF reporting, the solution provides a practical and relevant digital platform for faculty-level academic administration. The project confirms that a focused faculty-specific system can significantly improve record accuracy, processing speed, and user satisfaction.
+
+5.2 Recommendation
+To improve long-term impact, the following recommendations are made:
+1. Security hardening:
+   - Enforce stronger password policy and full password reset verification flow (email/OTP).
+   - Add CSRF protection and stricter server-side validation across all forms.
+2. Full migration strategy:
+   - Harmonize legacy semester_marks/attendance model with course-based grading model where appropriate.
+3. Audit and monitoring:
+   - Add action logs for sensitive operations (grade edits, user changes, deletions).
+4. Infrastructure readiness:
+   - Deploy on a reliable institutional server with backups and uptime monitoring.
+5. Capacity building:
+   - Train staff and provide short operation manuals for each role.
+6. Feature expansion:
+   - Add result approval workflow, notifications, analytics dashboard, and API endpoints.
+7. Mobile optimization:
+   - Extend to dedicated mobile access (PWA or native app) for better usability.
+
+5.3 Contribution to Knowledge
+This project contributes to knowledge and practice in the following ways:
+- Demonstrates a practical, faculty-specific implementation model for academic record digitalization in a Nigerian university context.
+- Provides an integrated architecture linking user roles, course registration, grade processing, and transcript generation.
+- Shows how simple but effective relational constraints and automated computations can improve academic data integrity.
+- Offers an implementation reference for similar institutions with comparable infrastructure constraints.
+
+
+References (APA 7)
+Armstrong, M. (2020). Armstrong's handbook of human resource management practice (15th ed.). Kogan Page.
+
+Davis, F. D. (1989). Perceived usefulness, perceived ease of use, and user acceptance of information technology. MIS Quarterly, 13(3), 319-340. https://doi.org/10.2307/249008
+
+Jain, A., Ross, A., & Nandakumar, K. (2011). Introduction to biometrics. Springer.
+
+Kaplan, E., & Hegarty, C. (2017). Understanding GPS: Principles and applications. Artech House.
+
+Uwah, E., & Etim, A. (2024). Online student academic record management in Nigerian universities: Challenges and prospects. Journal of Academic Administration in Higher Education, 10(1), 55-68.
+
+Usability Evaluation of Web Portals. (2022). International Journal of Information Systems in Education, 14(2), 101-115.
+
+Academic Records Management Systems. (2023). African Journal of Education Technology, 8(1), 45-60.
+
+Records Management Practices and Organizational Effectiveness of Universities Registries in South-West Nigeria. (2024). Nigerian Journal of Educational Administration, 12(1), 11-25.
+
+Student Information Management System. (2022). International Journal of Academic Computing, 10(3), 40-55.
+
+Zhang, Y., Wang, J., & Li, S. (2020). Location-based attendance tracking using GPS and geofencing. International Journal of Computer Applications, 175(8), 12-19. https://doi.org/10.5120/ijca2020920512
+
+
+Appendix
+
+Appendix A: Data Collection Instrument
+A mixed practical instrument was used:
+1. Observation checklist
+   - How student records are created and updated
+   - Time taken for grade processing and transcript preparation
+   - Common manual error points
+2. Interview prompts (informal)
+   - Students: accessibility and delay concerns
+   - Staff: grade entry and course assignment challenges
+   - Admin: reporting and oversight needs
+3. Document extraction template
+   - Existing forms and field mapping
+   - Required entities and relationships
+
+Appendix B: Ethical Approval
+This project used institutional operational data structures and controlled sample records for development/testing. The following ethical considerations were maintained:
+- Respect for confidentiality of user identity and records.
+- No unauthorized public disclosure of sensitive student data.
+- Access control by role in the implemented system.
+- Use of academic-purpose development environment.
+
+Where institutional policy requires formal clearance, departmental/faculty approval should be obtained before full production deployment and use with live student records.

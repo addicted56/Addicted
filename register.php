@@ -48,9 +48,9 @@ if(isset($_POST['register']))
 <!DOCTYPE html>
 <html>
 <head>
-<title>Register</title>
+<title>Register – UNIDEL</title>
 
-<link rel="stylesheet" href="/sms_project/style.css">
+<link rel="stylesheet" href="styles.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>

@@ -117,6 +117,7 @@ if($attendance < 65){
 <title>Student Dashboard</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 
@@ -126,8 +127,22 @@ if($attendance < 65){
 
 <?php include "header.php"; ?>
 
-<div class="container mt-3">
-<div class="d-flex justify-content-end gap-2">
+<div class="container mt-4">
+
+<div class="page-banner mb-3">
+<h4 class="mb-1">Welcome Back, <?= htmlspecialchars($student['name']); ?></h4>
+<p class="mb-0">Track your progress, manage your courses, and keep your record ready for final-year presentation.</p>
+</div>
+
+<div class="d-flex justify-content-end gap-2 flex-wrap">
+
+<a href="course_registration.php" class="btn btn-primary shadow-sm">
+<i class="bi bi-journal-plus"></i> Course Registration
+</a>
+
+<a href="transcript.php" class="btn btn-info shadow-sm text-white">
+<i class="bi bi-file-earmark-text"></i> View Transcript
+</a>
 
 <a href="download_pdf.php" class="btn btn-success shadow-sm">
 Download Report
@@ -140,11 +155,11 @@ Logout
 </div>
 </div>
 
-<div class="container mt-5">
-<div class="dashboard-card">
+<div class="container mt-4">
+<div class="dashboard-card p-4">
 
 <h3 class="mb-4">
-Student Name: <?php echo htmlspecialchars($student['name']); ?>
+Student Profile Overview
 </h3>
 
 <!-- BASIC INFO -->
@@ -174,7 +189,12 @@ Year
 </div>
 
 <!-- ATTENDANCE -->
-<div class="row justify-content-center mt-4">
+<div class="row justify-content-center mt-4 g-3">
+<div class="col-md-5">
+<div class="media-tile h-100">
+<img src="https://picsum.photos/id/1005/900/620" alt="Student study desk">
+</div>
+</div>
 <div class="col-md-6">
 
 <div class="info-box text-center">
