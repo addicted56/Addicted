@@ -5,24 +5,24 @@
 ### University of Delta, Agbor (UNIDEL) | Faculty of Computing
 
 <p>
-A premium, role-based academic management platform for handling student records,
-course registration, grading workflows, and transcript generation.
+An enterprise-style academic records platform designed for final-year project defense,
+production-like demonstrations, and clean role-based workflows.
 </p>
 
 <p>
   <img src="https://img.shields.io/badge/PHP-8.x-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP" />
-  <img src="https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" />
+  <img src="https://img.shields.io/badge/MySQL-Relational_DB-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" />
   <img src="https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap" />
-  <img src="https://img.shields.io/badge/Dompdf-PDF%20Engine-2C8C99?style=for-the-badge" alt="Dompdf" />
-  <img src="https://img.shields.io/badge/Composer-Dependency%20Manager-885630?style=for-the-badge&logo=composer&logoColor=white" alt="Composer" />
+  <img src="https://img.shields.io/badge/Dompdf-PDF_Export-2C8C99?style=for-the-badge" alt="Dompdf" />
+  <img src="https://img.shields.io/badge/Composer-Dependency_Manager-885630?style=for-the-badge&logo=composer&logoColor=white" alt="Composer" />
 </p>
 
 <p>
-  <a href="#-overview">Overview</a> •
-  <a href="#-key-features">Features</a> •
-  <a href="#-system-flow">System Flow</a> •
-  <a href="#-quick-setup-xampp">Quick Setup</a> •
-  <a href="#-project-structure">Structure</a>
+  <a href="#overview">Overview</a> •
+  <a href="#why-this-repo-stands-out">Why It Stands Out</a> •
+  <a href="#capability-highlights">Capability Highlights</a> •
+  <a href="#visual-gallery">Visual Gallery</a> •
+  <a href="#quick-setup-xampp">Quick Setup</a>
 </p>
 
 </div>
@@ -31,47 +31,51 @@ course registration, grading workflows, and transcript generation.
 
 ## Overview
 
-This project is a full-stack **Student Academic Record Management System (SARMS)** built for academic operations in a university environment.
+This project is a complete, role-based Student Academic Record Management System built to modernize academic workflows.
 
-It provides secure, role-based workflows for:
+It demonstrates a real institutional flow from account access to final transcript export:
 
-- **Admin**: manage students, staff, courses, and assignments
-- **Staff**: enter CA and exam scores for assigned courses
-- **Students**: register courses, track progress, and download transcripts
+- Admin manages students, staff, courses, and course assignment
+- Staff enters and updates CA plus exam scores for assigned courses
+- Students register courses, track academic progress, and download transcript reports
 
-The platform emphasizes:
-
-- centralized data management
-- transparent grading process
-- fast access to academic records
-- clean dashboard-based user experience
+The solution is designed to look polished during project presentation while still showing strong backend logic and data integrity.
 
 ---
 
-## Key Features
+## Why This Repo Stands Out
 
-### Core Academic Modules
+| Area | What Makes It Premium |
+| --- | --- |
+| Product feel | Dashboard-first UI with clear role journeys |
+| Academic logic | Automatic grade, GPA, and CGPA computation |
+| Data reliability | Foreign keys, uniqueness constraints, and role separation |
+| Output quality | Printable transcript layout and PDF export pipeline |
+| Demonstration strength | Structured final-defense flow and scenario-ready modules |
 
-- Role-based authentication: Admin, Staff, Student
-- Student profile and academic record management
-- Course creation and staff-course assignment
-- Session-based course registration
-- Grade entry with automatic grade and grade-point mapping
-- GPA and CGPA calculations
-- Transcript rendering and PDF downloads
+---
 
-### Experience and Presentation
+## Capability Highlights
 
-- Modern responsive UI with Bootstrap and custom styling
-- Dashboard cards and visual summary panels
-- Print-friendly transcript views
-- Structured workflow suitable for final-year presentation demos
+### Access and Security
 
-### Data and Integrity
+- Multi-role login for Admin, Staff, and Student
+- Session-driven access control across all protected routes
+- Password update flow for first-login users
 
-- MySQL relational schema with foreign keys and constraints
-- Duplicate prevention for registrations and grade entries
-- Included migration and fresh schema scripts
+### Academic Operations
+
+- Student records management
+- Course catalog management and staff assignment
+- Student course registration by academic session
+- Grade input with automatic grade-point mapping
+- Transcript assembly and cumulative performance summary
+
+### Reporting and Export
+
+- Student reports generated as PDF
+- Transcript export with GPA and CGPA summary
+- Print-friendly transcript pages for physical documentation
 
 ---
 
@@ -79,27 +83,44 @@ The platform emphasizes:
 
 ```mermaid
 flowchart LR
-    A[Admin] --> B[Manage Students and Staff]
-    A --> C[Create Courses]
-    A --> D[Assign Courses to Staff]
-    E[Student] --> F[Register Courses]
-    G[Staff] --> H[Enter CA and Exam Scores]
-    H --> I[Auto Grade and Grade Point]
-    I --> J[Transcript Engine]
-    J --> K[GPA and CGPA]
-    K --> L[PDF Transcript and Reports]
+    A[Admin Login] --> B[Manage Students, Staff, Courses]
+    B --> C[Assign Staff to Courses]
+    D[Student Login] --> E[Register Courses]
+    F[Staff Login] --> G[Enter CA and Exam Scores]
+    G --> H[Auto Compute Grade and GP]
+    H --> I[Transcript Aggregation]
+    I --> J[GPA and CGPA]
+    J --> K[PDF Transcript Export]
 ```
+
+---
+
+## Visual Gallery
+
+Presentation screens are available in the screenshots folder and can be shown live during defense.
+
+<p align="center">
+  <img src="screenshots/Screenshot%20(236).png" alt="Dashboard screenshot" width="31%" />
+  <img src="screenshots/Screenshot%20(240).png" alt="Course management screenshot" width="31%" />
+  <img src="screenshots/Screenshot%20(244).png" alt="Transcript screenshot" width="31%" />
+</p>
+
+<p align="center">
+  <img src="screenshots/Screenshot%20(432).png" alt="Staff workflow screenshot" width="31%" />
+  <img src="screenshots/Screenshot%20(436).png" alt="Registration screenshot" width="31%" />
+  <img src="screenshots/Screenshot%20(468).png" alt="Report screenshot" width="31%" />
+</p>
 
 ---
 
 ## Tech Stack
 
-- **Backend:** PHP
-- **Database:** MySQL
-- **Frontend:** HTML5, CSS3, Bootstrap 5, JavaScript
-- **Icons:** Bootstrap Icons
-- **PDF:** Dompdf
-- **Dependencies:** Composer
+- Backend: PHP
+- Database: MySQL
+- Frontend: HTML5, CSS3, Bootstrap 5, JavaScript
+- Icon Library: Bootstrap Icons
+- PDF Engine: Dompdf
+- Dependency Management: Composer
 
 ---
 
@@ -118,34 +139,32 @@ cd Addicted
 composer install
 ```
 
-### 3. Start Services
+### 3. Start Apache and MySQL
 
-- Start **Apache** and **MySQL** in XAMPP
-- Open **phpMyAdmin**
+- Open XAMPP
+- Start Apache
+- Start MySQL
+- Open phpMyAdmin
 
 ### 4. Create Database
 
-Create a database, for example:
+- Create: `unidel_sarms`
 
-- `unidel_sarms`
+### 5. Import SQL Schema
 
-### 5. Import SQL
+- Fresh setup: `database/unidel_schema.sql`
+- Migration path: `database/migrate.sql`
 
-Choose one:
+### 6. Configure Database Connection
 
-- Fresh install: `database/unidel_schema.sql`
-- Upgrade existing schema: `database/migrate.sql`
-
-### 6. Configure Connection
-
-Update DB credentials in `db.php`:
+Edit `db.php` and set your local:
 
 - host
 - username
 - password
-- database name
+- database
 
-### 7. Run in Browser
+### 7. Launch Application
 
 ```text
 http://localhost/Student-Management-System/
@@ -153,12 +172,12 @@ http://localhost/Student-Management-System/
 
 ---
 
-## Default Admin Login
+## Default Admin Access
 
-If you imported `database/unidel_schema.sql`, default admin is:
+When `database/unidel_schema.sql` is imported:
 
-- **Username:** `admin`
-- **Password:** `password`
+- Username: `admin`
+- Password: `password`
 
 ---
 
@@ -180,6 +199,7 @@ Student-Management-System/
 |-- download_pdf.php
 |-- db.php
 |-- styles.css
+|-- screenshots/
 |-- database/
 |   |-- migrate.sql
 |   |-- unidel_schema.sql
@@ -187,26 +207,20 @@ Student-Management-System/
 
 ---
 
-## Presentation Notes (For Final Defense)
+## Final Defense Demo Script
 
-Use this project demo order for a smooth presentation:
+Use this order for a sharp and confident presentation:
 
-1. Show role-based login (Admin, Staff, Student)
-2. As Admin, create or manage course/staff records
-3. As Staff, enter CA and exam scores
-4. As Student, show dashboard, registration, and transcript
-5. Download transcript PDF and explain GPA/CGPA output
+1. Start with Admin login and show course/staff management
+2. Switch to Staff login and enter grades
+3. Switch to Student login and show registration and dashboard analytics
+4. Open transcript page and explain GPA/CGPA logic
+5. Export PDF transcript to demonstrate reporting quality
 
-This flow clearly demonstrates architecture, business logic, and real-world usability.
-
----
-
-## Live Demo
-
-https://studentprofile.gt.tc/
+This sequence quickly proves system design, implementation depth, and practical relevance.
 
 ---
 
 ## License
 
-This repository is intended for educational and academic demonstration purposes.
+This repository is intended for educational and academic presentation use.
